@@ -15,13 +15,13 @@ Add this to your ~/.zshrc and then press CTRL+P
 ## Code:
 
 ```
-#directory based history
-beepboop () {
-  echo -n "$1" >> .directory_history
-}
-
 openFzfDirectoryHistory() {
-  RBUFFER=$(cat .directory_history | fzf)
+  # Sort by data
+  #RBUFFER=$(cat .directory_history | fzf)
+  
+  # Sort by frequency
+  RBUFFER=$(cat .directory_history | sort | uniq -c | sort -rn | sed -e 's/\s*[0-9]*\s*//' | fzf)
+
   zle redisplay
 	zle end-of-line;
 	zle accept-line;
